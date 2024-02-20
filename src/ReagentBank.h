@@ -18,7 +18,8 @@
 enum GossipItemType : uint8
 {
     DEPOSIT_ALL_REAGENTS = 16,
-    MAIN_MENU = 17
+    PERSONAL_OR_GUILD = 17,
+    MAIN_MENU = 18
 };
 
 
