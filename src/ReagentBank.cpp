@@ -278,7 +278,10 @@ public:
     bool OnGossipHello(Player* player, Creature* creature) override
     {
         AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "Personal Reagent Bank", PERSONAL_OR_GUILD, 0);
-        AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "Guild Reagent Bank", PERSONAL_OR_GUILD, 100);
+        if(player->GetGuildId() > 0)
+        {
+            AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "Guild Reagent Bank", PERSONAL_OR_GUILD, 100);
+        }
         SendGossipMenuFor(player, NPC_TEXT_ID, creature->GetGUID());
         return true;
     }
@@ -291,11 +294,11 @@ public:
             // item_subclass is actually an item ID to withdraw
             // Get the actual item subclass from the template
             const ItemTemplate *temp = sObjectMgr->GetItemTemplate(item_subclass);
-            if(gossipPageNumber == 0)
+            if(gossipPageNumber < 100)
             {
                 WithdrawItem(player, item_subclass);
             }
-            else if(gossipPageNumber == 100)
+            else // if(gossipPageNumber >= 100 && gossipPageNumber < MAX_PAGE_NUMBER)
             {
                 WithdrawItemGuild(player, item_subclass);
             }
@@ -414,7 +417,7 @@ public:
             {
                 AddGossipItemFor(player, GOSSIP_ICON_CHAT, "Previous Page", item_subclass, gossipPageNumber - 1);
             }
-            if (endValue < entryToAmountMap.size())
+            if (endValue < entryToAmountMap.size() - 1 && entryToAmountMap.size() > 0)
             {
                 AddGossipItemFor(player, GOSSIP_ICON_CHAT, "Next Page", item_subclass, gossipPageNumber + 1);
             }
@@ -455,7 +458,7 @@ public:
             {
                 AddGossipItemFor(player, GOSSIP_ICON_CHAT, "Previous Page", item_subclass, gossipPageNumber - 1);
             }
-            if (endValue < entryToAmountMap.size())
+            if (endValue < entryToAmountMap.size() - 1 && entryToAmountMap.size() > 0)
             {
                 AddGossipItemFor(player, GOSSIP_ICON_CHAT, "Next Page", item_subclass, gossipPageNumber + 1);
             }

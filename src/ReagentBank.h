@@ -11,7 +11,7 @@
 #include "ItemTemplate.h"
 #include <map>
 
-#define MAX_OPTIONS 23
+#define MAX_OPTIONS 10
 #define MAX_PAGE_NUMBER 700 // Values higher than this are considered Item IDs
 #define NPC_TEXT_ID 4259 // Pre-existing NPC text
 
